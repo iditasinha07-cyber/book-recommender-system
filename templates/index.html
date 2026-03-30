@@ -1,66 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>CS Book Recommender</title>
-
-<style>
-
-body{
-font-family: Arial;
-background-color:#f2f2f2;
-text-align:center;
-margin-top:100px;
-}
-
-.container{
-background:white;
-padding:30px;
-width:400px;
-margin:auto;
-border-radius:10px;
-box-shadow:0px 0px 10px grey;
-}
-
-input{
-width:80%;
-padding:10px;
-margin:10px;
-}
-
-button{
-padding:10px 20px;
-background:#007BFF;
-color:white;
-border:none;
-border-radius:5px;
-}
-
-li{
-margin:10px;
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BiblioAI — CS Book Recommender</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- Background decoration -->
+  <div class="bg-grid"></div>
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
 
-<h2>📚 Computer Science Book Recommender</h2>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">📚</span>
+      <span class="logo-text">Biblio<span class="accent">AI</span></span>
+    </div>
+    <p class="tagline">AI-Powered Computer Science Book Recommender</p>
+  </header>
 
-<form method="POST">
-<input type="text" name="query" placeholder="Enter topic like python or machine learning">
-<br>
-<button type="submit">Recommend</button>
-</form>
+  <!-- Hero Search Section -->
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero-title">Find Your Perfect<br/><em>CS Book</em></h1>
+      <p class="hero-sub">Tell us what you want to learn — a topic, a concept you're struggling with, or a subject you're curious about.</p>
 
-<ul>
-{% for book in books %}
-<li>{{ book }}</li>
-{% endfor %}
-</ul>
+      <!-- Search Box -->
+      <div class="search-card">
+        <div class="search-examples">
+          <span>Try:</span>
+          <button class="chip" onclick="fillQuery('I am weak in normalization')">I am weak in normalization</button>
+          <button class="chip" onclick="fillQuery('beginner Python book')">beginner Python book</button>
+          <button class="chip" onclick="fillQuery('machine learning for beginners')">machine learning</button>
+          <button class="chip" onclick="fillQuery('data structures and algorithms')">data structures</button>
+        </div>
 
-</div>
+        <div class="search-row">
+          <div class="input-wrap">
+            <span class="input-icon">🔍</span>
+            <input
+              type="text"
+              id="query"
+              placeholder="e.g. I want to learn recursion, best Python book, normalization..."
+              autocomplete="off"
+            />
+          </div>
+          <select id="level" class="level-select">
+            <option value="All">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+          <button class="search-btn" onclick="getRecommendations()">
+            <span id="btn-text">Recommend</span>
+            <span id="btn-spinner" class="spinner hidden"></span>
+          </button>
+        </div>
+      </div>
 
+      <!-- Topic Pills -->
+      <div class="topics-section">
+        <p class="topics-label">Browse by topic:</p>
+        <div class="topics-grid" id="topicsGrid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section hidden" id="resultsSection">
+
+      <!-- AI Explanation Box -->
+      <div class="ai-box" id="aiBox">
+        <div class="ai-header">
+          <span class="ai-badge">🤖 AI Insight</span>
+          <span class="ai-topic" id="aiTopic"></span>
+        </div>
+        <p class="ai-text" id="aiText"></p>
+      </div>
+
+      <!-- Results Header -->
+      <div class="results-header">
+        <h2 class="results-title">Top 5 Recommendations</h2>
+        <span class="results-meta" id="resultsMeta"></span>
+      </div>
+
+      <!-- Book Cards -->
+      <div class="books-grid" id="booksGrid"></div>
+    </section>
+
+    <!-- Similar Books Section -->
+    <section class="similar-section hidden" id="similarSection">
+      <h3 class="similar-title">📖 Similar Books</h3>
+      <div class="books-grid" id="similarGrid"></div>
+    </section>
+
+    <!-- Error -->
+    <div class="error-box hidden" id="errorBox">
+      <span>⚠️</span> <span id="errorText"></span>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Powered by <strong>Open Library API</strong> + <strong>Claude AI</strong> &nbsp;|&nbsp; Built with 💙 for CS students</p>
+  </footer>
+
+  <script src="/static/script.js"></script>
 </body>
 </html>
